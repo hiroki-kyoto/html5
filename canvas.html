@@ -1,0 +1,168 @@
+<html>
+	<head><title>Canvas Trial</title></head>
+	<body>
+		<canvas style='width:600px;height:300px;' id='platform1'></canvas>
+		<canvas style='width:600px;height:300px;' id='platform2'></canvas>
+		<canvas style='width:600px;height:300px;' id='platform3'></canvas>
+		<canvas style='width:600px;height:300px;' id='platform4'></canvas>
+		<canvas style='width:600px;height:300px;' id='platform5'></canvas>
+		<canvas style='width:600px;height:300px;' id='platform6'></canvas>
+	</body>
+	
+<script>
+var canvas1 = document.getElementById('platform1');
+var canvas2 = document.getElementById('platform2');
+var canvas3 = document.getElementById('platform3');
+var canvas4 = document.getElementById('platform4');
+var canvas5 = document.getElementById('platform5');
+var canvas6 = document.getElementById('platform6');
+function drawRect(canvas){
+	if(canvas==null) {return false;}
+	var context = canvas.getContext('2d');
+	context.fillStyle = "#0044ff";
+	context.fillRect(0,0,400,300);
+	context.fillStyle = "red";
+	context.fillRect(50,50,100,100);
+	context.strokeRect(50,50,100,100);
+}
+function drawPath(canvas){
+	if(canvas==null){return false;}
+	var context = canvas.getContext('2d');
+	context.fillStyle = "#eeeeff";
+	context.fillRect(0,0,400,300);
+	for(var i=0;i<10;i++){
+		context.beginPath();
+		context.arc(i*25,i*25,i*10,0,Math.PI*2,true);
+		context.closePath();
+		context.fillStyle = 'rgba(255,0,0,0.25)';
+		context.fill();
+	}	
+}
+function drawLine(canvas){
+	if(canvas==null){return false;}
+	var context = canvas.getContext('2d');
+	context.fillRect(0,0,400,300);
+	var n = 0;
+	var dx = 150;
+	var dy = 150;
+	var s = 100;
+	context.fillStyle = 'rgb(100,255,100)';
+	context.strokeStyle = 'rgb(0,0,100)';
+	var x = Math.sin(0);
+	var y = Math.cos(0);
+	var dig = Math.PI/15*11;
+	for(var i=0;i<30;i++){
+		var x = Math.sin(i*dig);
+		var y = Math.cos(i*dig);
+		context.lineTo(dx+x*s,dy+y*s);
+	}
+	context.closePath();
+	context.fill();
+	context.stroke();
+}
+function drawLinearGradient(canvas){
+	if(canvas==null){return false;}
+	var context = canvas.getContext('2d');
+	var gradient1 = context.createLinearGradient(0,0,0,300);
+	gradient1.addColorStop(0,'rgb(255,255,0)');
+	gradient1.addColorStop(1,'rgb(0,255,255)');
+	context.fillStyle = gradient1;
+	context.fillRect(0,0,400,300);
+	var n = 0;
+	var gradient2 = context.createLinearGradient(0,0,300,0);
+	gradient2.addColorStop(0,'rgba(0,0,255,0.5)');
+	gradient2.addColorStop(1,'rgba(255,0,0,0.5)');
+	for(var i=0;i<10;i++){
+		context.beginPath();
+		context.fillStyle = gradient2;
+		context.arc(i*25,i*25,i*10,0,Math.PI*2,true);
+		context.closePath();
+		context.fill();
+	}
+}
+
+function create5star(context){
+	var n = 0;
+	var dx = 100;
+	var dy = 0;
+	var s = 50;
+	context.beginPath();
+	context.fillStyle = "rgba(255,0,0,0.5)";
+	var x = Math.sin(0);
+	var y = Math.cos(0);
+	var dig = Math.PI/5*4;
+	for(var i=0;i<5;i++){
+		var x = Math.sin(i*dig);
+		var y = Math.cos(i*dig);
+		context.lineTo(dx+x*s, dy+y*s);
+	}
+	context.closePath();
+}
+
+function drawTransformShape(canvas){
+	if(canvas==null){return false;}
+	var context = canvas.getContext('2d');
+	context.fillStyle = "#335533";
+	context.fillRect(0,0,400,300);
+	context.translate(200,50);
+	for(var i=0;i<50;i++){
+		context.translate(25,25);
+		context.scale(0.95,0.95);
+		context.rotate(Math.PI/10);
+		create5star(context);
+		context.fill();	
+	}
+}
+
+function draw3DGraph(canvas){
+	var context = canvas.getContext('2d');
+	//draw a cubic box:
+	//draw top
+	var gradient1 = context.createLinearGradient(0,0,0,300);
+	gradient1.addColorStop(0,'rgba(200,0,200,1)');
+	gradient1.addColorStop(1,'rgba(0,255,0,0)');
+	context.fillStyle = gradient1;
+	//context.fillStyle = '#00ca00';
+	context.beginPath();
+	context.lineTo(0,0);
+	context.lineTo(100,0);
+	context.lineTo(140,50);
+	context.lineTo(40,50);
+	context.closePath();
+	context.fill();
+	//draw front
+	var gradient1 = context.createLinearGradient(0,0,0,300);
+	gradient1.addColorStop(0,'rgba(255,0,200,1)');
+	gradient1.addColorStop(1,'rgba(0,255,10,0)');
+	context.fillStyle = gradient1;
+	//context.fillStyle = '#00ca00';
+	context.beginPath();
+	context.lineTo(40,50);
+	context.lineTo(140,50);
+	context.lineTo(140,120);
+	context.lineTo(40,120);
+	context.closePath();
+	context.fill();
+	//draw left
+	var gradient1 = context.createLinearGradient(0,0,0,300);
+	gradient1.addColorStop(0,'rgba(200,0,250,1)');
+	gradient1.addColorStop(1,'rgba(20,200,0,0)');
+	context.fillStyle = gradient1;
+	//context.fillStyle = '#00ca00';
+	context.beginPath();
+	context.lineTo(0,0);
+	context.lineTo(40,50);
+	context.lineTo(40,120);
+	context.lineTo(0,70);
+	context.closePath();
+	context.fill();
+}
+
+drawLine(canvas1);
+drawPath(canvas2);
+drawRect(canvas3);
+drawLinearGradient(canvas4);
+drawTransformShape(canvas5);
+draw3DGraph(canvas6);	
+</script>
+</html>
